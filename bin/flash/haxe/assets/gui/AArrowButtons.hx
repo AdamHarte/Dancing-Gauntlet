@@ -1,4 +1,4 @@
-package assets;
+package assets.gui;
 
 
 import format.swf.symbol.Symbol;
@@ -7,7 +7,7 @@ import format.SWF;
 import nme.Assets;
 
 
-class AFloorTile extends MovieClip {
+class AArrowButtons extends MovieClip {
 	
 	
 	public function new () {
@@ -20,7 +20,7 @@ class AFloorTile extends MovieClip {
 		
 		var swf = SWF.instances.get ("libraries/dancing_gauntlet_assets.swf");
 		
-		switch (swf.getSymbol (9)) {
+		switch (swf.getSymbol (3)) {
 			
 			case spriteSymbol (data):
 				

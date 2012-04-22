@@ -1,4 +1,7 @@
 package com.adamharte.dancinggauntlet;
+import com.adamharte.dancinggauntlet.dancers.Dancer;
+import com.adamharte.dancinggauntlet.dancers.Player;
+import com.adamharte.dancinggauntlet.dancers.RubberMan;
 
 /**
  * ...
@@ -8,12 +11,21 @@ package com.adamharte.dancinggauntlet;
 class GameState 
 {
 	public inline static var DANCE_FLOOR_WIDTH:Int = 13;
-	public inline static var DANCE_FLOOR_HEIGHT:Int = 13;
+	public inline static var DANCE_FLOOR_HEIGHT:Int = 11;
+	public inline static var TILE_SIZE:Int = 30;
 	
-	public var isPlaying:Bool;
+	public inline static var DANCER_ID_NONE:Int 		= 0;
+	public inline static var DANCER_ID_PLAYER:Int 		= 1;
+	public inline static var DANCER_ID_RUBBER_MAN:Int 	= 2;
+	
+	public inline static var STATE_INVALID:Int 		= 0;
+	public inline static var STATE_PLAYING:Int 		= 1;
+	
+	public var currentState:Int;
 	public var score:Int;
 	
 	public var danceFloor:Array<Array<Int>>;
+	public var dancers:Array<Array<Dancer>>;
 	
 	
 
@@ -28,11 +40,11 @@ class GameState
 	
 	private function reset() 
 	{
-		isPlaying = false;
+		currentState = STATE_INVALID;
 		score = 0;
 		
 		// Create new dance floor.
-		danceFloor = [];
+		/*danceFloor = [];
 		for (i in 0...DANCE_FLOOR_HEIGHT) 
 		{
 			danceFloor[i] = [];
@@ -40,10 +52,44 @@ class GameState
 			{
 				danceFloor[i][j] = 0;
 			}
+		}*/
+		
+		danceFloor = [
+			[0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,2,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,1,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,2,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,2,0,0,0,0,0,0,0,0,0,0,0]
+		];
+		dancers = [];
+		for (i in 0...DANCE_FLOOR_HEIGHT) 
+		{
+			dancers[i] = [];
+			for (j in 0...DANCE_FLOOR_WIDTH) 
+			{
+				var newDancer:Dancer = null;
+				switch (danceFloor[i][j]) 
+				{
+					case DANCER_ID_PLAYER:
+						newDancer = new Player();
+					case DANCER_ID_RUBBER_MAN:
+						newDancer = new RubberMan();
+					default:
+				}
+				if (newDancer != null) 
+				{
+					newDancer.indexX = j;
+					newDancer.indexY = i;
+					dancers[i][j] = newDancer;
+				}
+			}
 		}
-		
-		
-		
 	}
 	
 }

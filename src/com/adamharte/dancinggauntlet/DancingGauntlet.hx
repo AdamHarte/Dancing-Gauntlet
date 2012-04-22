@@ -53,7 +53,9 @@ class DancingGauntlet extends Sprite
 	
 	private function enterFrameHandler(e:Event):Void 
 	{
-		
+		//TODO: Fix this later! (Time based)
+		sceneManager.update();
+		sceneManager.draw();
 	}
 	
 	
