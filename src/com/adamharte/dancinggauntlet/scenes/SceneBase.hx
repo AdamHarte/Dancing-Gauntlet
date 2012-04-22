@@ -27,12 +27,12 @@ class SceneBase extends Sprite
 		
 	}
 	
-	private function update():Void 
+	public function update():Void 
 	{
 		
 	}
 	
-	private function draw():Void 
+	public function draw():Void 
 	{
 		
 	}

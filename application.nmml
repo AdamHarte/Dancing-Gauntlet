@@ -11,10 +11,12 @@
 	<!-- classpath, haxe libs -->
 	<classpath name="src" />
 	<haxelib name="nme" />
+	<haxelib name="swf" />
 	
 	<!-- assets -->
 	<icon name="assets/nme.svg" />
 	<assets path="assets" include="*" exclude="nme.svg" />
+	<library path="assets/dancing_gauntlet_assets.swf" />
 	
 	<!-- DLLs -->
 	<ndll name="std" />

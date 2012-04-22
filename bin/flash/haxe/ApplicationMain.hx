@@ -1,5 +1,6 @@
 import com.adamharte.dancinggauntlet.Main;
 import nme.Assets;
+import nme.events.Event;
 
 
 class ApplicationMain {
@@ -38,12 +39,9 @@ class ApplicationMain {
 		
 		if (loaded >= total) {
 			
-			mPreloader.onLoaded();
 			nme.Lib.current.removeEventListener(nme.events.Event.ENTER_FRAME, onEnter);
-			nme.Lib.current.removeChild(mPreloader);
-			mPreloader = null;
-			
-			Main.main ();
+			mPreloader.addEventListener (Event.COMPLETE, preloader_onComplete);
+			mPreloader.onLoaded();
 			
 		}
 		
@@ -52,11 +50,41 @@ class ApplicationMain {
 	public static function getAsset (inName:String):Dynamic {
 		
 		
+		if (inName=="assets/dancing_gauntlet_assets.swf")
+			 
+            return Assets.getBytes ("assets/dancing_gauntlet_assets.swf");
+         
+		
+		if (inName=="libraries/dancing_gauntlet_assets.swf")
+			 
+            return Assets.getBytes ("libraries/dancing_gauntlet_assets.swf");
+         
+		
 		
 		return null;
+		
+	}
+	
+	
+	private static function preloader_onComplete (event:Event):Void {
+		
+		mPreloader.removeEventListener (Event.COMPLETE, preloader_onComplete);
+		
+		nme.Lib.current.removeChild(mPreloader);
+		mPreloader = null;
+		
+		Main.main ();
 		
 	}
 	
 }
 
 
+
+	
+		class NME_assets_dancing_gauntlet_assets_swf extends nme.utils.ByteArray { }
+	
+
+	
+		class NME_libraries_dancing_gauntlet_assets_swf extends nme.utils.ByteArray { }
+	

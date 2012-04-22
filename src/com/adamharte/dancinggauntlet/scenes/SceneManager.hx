@@ -20,18 +20,37 @@ class SceneManager extends Sprite
 	
 	public function update():Void 
 	{
+		if (currentScene == null) return;
 		
+		currentScene.update();
 	}
 	
 	public function draw():Void 
 	{
+		if (currentScene == null) return;
 		
+		currentScene.draw();
 	}
 	
 	public function changeScene(sceneName:String):Void 
 	{
 		//TODO: Remove old scene.
-		//TODO: Add new scene.
+		
+		
+		//TODO: Add new scene (Create if needed).
+		switch (sceneName) 
+		{
+			case ScenePlay.SCENE_NAME:
+				currentScene = new ScenePlay();
+			default:
+				trace('ERROR: Unknown Scene');
+		}
+		
+		if (currentScene != null) 
+		{
+			addChild(currentScene);
+		}
+		
 	}
 	
 	

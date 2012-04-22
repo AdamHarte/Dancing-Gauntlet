@@ -1,4 +1,6 @@
 package com.adamharte.dancinggauntlet;
+import com.adamharte.dancinggauntlet.scenes.SceneManager;
+import com.adamharte.dancinggauntlet.scenes.ScenePlay;
 import nme.display.StageAlign;
 import nme.display.StageQuality;
 import nme.display.StageScaleMode;
@@ -13,6 +15,8 @@ import nme.Lib;
 
 class DancingGauntlet extends Sprite
 {
+	private var sceneManager:SceneManager;
+	
 
 	public function new() 
 	{
@@ -27,6 +31,11 @@ class DancingGauntlet extends Sprite
 		removeEventListener(Event.ADDED_TO_STAGE, init);
 		
 		initStage();
+		
+		sceneManager = new SceneManager();
+		addChild(sceneManager);
+		
+		sceneManager.changeScene(ScenePlay.SCENE_NAME);
 		
 		this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
 	}

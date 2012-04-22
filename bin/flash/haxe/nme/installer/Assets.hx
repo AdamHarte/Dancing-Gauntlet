@@ -17,48 +17,117 @@ import ApplicationMain;
 class Assets {
 
 	
-	public static function getBitmapData (id:String):BitmapData {
+	public static var cachedBitmapData:Hash<BitmapData> = new Hash<BitmapData>();
+	
+	private static var initialized:Bool = false;
+	private static var resourceClasses:Hash <Dynamic> = new Hash <Dynamic> ();
+	private static var resourceTypes:Hash <String> = new Hash <String> ();
+	
+	
+	private static function initialize ():Void {
 		
-		switch (id) {
+		if (!initialized) {
 			
+			resourceClasses.set ("assets/dancing_gauntlet_assets.swf", NME_assets_dancing_gauntlet_assets_swf);
+			resourceTypes.set ("assets/dancing_gauntlet_assets.swf", "asset");
+			resourceClasses.set ("libraries/dancing_gauntlet_assets.swf", NME_libraries_dancing_gauntlet_assets_swf);
+			resourceTypes.set ("libraries/dancing_gauntlet_assets.swf", "asset");
+			
+			initialized = true;
 			
 		}
 		
-		return null;
+	}
+	
+	
+	public static function getBitmapData (id:String, useCache:Bool = true):BitmapData {
+		
+		initialize ();
+		
+		if (resourceTypes.exists (id) && resourceTypes.get (id) == "image") {
+			
+			if (useCache && cachedBitmapData.exists (id)) {
+				
+				return cachedBitmapData.get (id);
+				
+			} else {
+				
+				var data = cast (Type.createInstance (resourceClasses.get (id), []), BitmapData);
+				
+				if (useCache) {
+					
+					cachedBitmapData.set (id, data);
+					
+				}
+				
+				return data;
+				
+			}
+			
+		} else {
+			
+			trace ("[nme.Assets] There is no BitmapData asset with an ID of \"" + id + "\"");
+			
+			return null;
+			
+		}
 		
 	}
 	
 	
 	public static function getBytes (id:String):ByteArray {
 		
-		switch (id) {
+		initialize ();
+		
+		if (resourceClasses.exists (id)) {
 			
+			return cast (Type.createInstance (resourceClasses.get (id), []), ByteArray);
+			
+		} else {
+			
+			trace ("[nme.Assets] There is no String or ByteArray asset with an ID of \"" + id + "\"");
+			
+			return null;
 			
 		}
-		
-		return null;
 		
 	}
 	
 	
 	public static function getFont (id:String):Font {
 		
-		switch (id) {
+		initialize ();
+		
+		if (resourceTypes.exists (id) && resourceTypes.get (id) == "font") {
 			
+			return cast (Type.createInstance (resourceClasses.get (id), []), Font);
+			
+		} else {
+			
+			trace ("[nme.Assets] There is no Font asset with an ID of \"" + id + "\"");
+			
+			return null;
 			
 		}
-		
-		return null;
 		
 	}
 	
 	
 	public static function getSound (id:String):Sound {
 		
-		switch (id) {
+		initialize ();
+		
+		if (resourceTypes.exists (id)) {
 			
+			if (resourceTypes.get (id) == "sound" || resourceTypes.get (id) == "music") {
+				
+				return cast (Type.createInstance (resourceClasses.get (id), []), Sound);
+				
+			}
 			
 		}
+		
+		trace ("[nme.Assets] There is no Sound asset with an ID of \"" + id + "\"");
 		
 		return null;
 		
@@ -67,7 +136,7 @@ class Assets {
 	
 	public static function getText (id:String):String {
 		
-		var bytes:ByteArray = getBytes (id);
+		var bytes = getBytes (id);
 		
 		if (bytes == null) {
 			
