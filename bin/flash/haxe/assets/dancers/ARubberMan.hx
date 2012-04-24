@@ -20,7 +20,7 @@ class ARubberMan extends MovieClip {
 		
 		var swf = SWF.instances.get ("libraries/dancing_gauntlet_assets.swf");
 		
-		switch (swf.getSymbol (7)) {
+		switch (swf.getSymbol (10)) {
 			
 			case spriteSymbol (data):
 				

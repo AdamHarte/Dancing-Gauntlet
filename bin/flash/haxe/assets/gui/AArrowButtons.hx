@@ -20,7 +20,7 @@ class AArrowButtons extends MovieClip {
 		
 		var swf = SWF.instances.get ("libraries/dancing_gauntlet_assets.swf");
 		
-		switch (swf.getSymbol (3)) {
+		switch (swf.getSymbol (6)) {
 			
 			case spriteSymbol (data):
 				

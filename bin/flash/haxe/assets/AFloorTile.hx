@@ -20,7 +20,7 @@ class AFloorTile extends MovieClip {
 		
 		var swf = SWF.instances.get ("libraries/dancing_gauntlet_assets.swf");
 		
-		switch (swf.getSymbol (9)) {
+		switch (swf.getSymbol (12)) {
 			
 			case spriteSymbol (data):
 				
