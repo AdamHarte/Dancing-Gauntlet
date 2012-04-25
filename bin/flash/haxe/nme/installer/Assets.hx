@@ -28,8 +28,6 @@ class Assets {
 		
 		if (!initialized) {
 			
-			resourceClasses.set ("assets/dancing_gauntlet_assets.swf", NME_assets_dancing_gauntlet_assets_swf);
-			resourceTypes.set ("assets/dancing_gauntlet_assets.swf", "asset");
 			resourceClasses.set ("libraries/dancing_gauntlet_assets.swf", NME_libraries_dancing_gauntlet_assets_swf);
 			resourceTypes.set ("libraries/dancing_gauntlet_assets.swf", "asset");
 			

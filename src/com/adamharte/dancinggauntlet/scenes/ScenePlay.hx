@@ -129,6 +129,7 @@ class ScenePlay extends SceneBase
 	
 	private function arrowButtons_buttonClickHandler(e:GUIEvent):Void 
 	{
+		trace(e.guiElement);
 		//TODO: Select what direction the player will try to move in.
 		switch (e.guiElement) 
 		{

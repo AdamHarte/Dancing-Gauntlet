@@ -50,11 +50,6 @@ class ApplicationMain {
 	public static function getAsset (inName:String):Dynamic {
 		
 		
-		if (inName=="assets/dancing_gauntlet_assets.swf")
-			 
-            return Assets.getBytes ("assets/dancing_gauntlet_assets.swf");
-         
-		
 		if (inName=="libraries/dancing_gauntlet_assets.swf")
 			 
             return Assets.getBytes ("libraries/dancing_gauntlet_assets.swf");
@@ -80,10 +75,6 @@ class ApplicationMain {
 }
 
 
-
-	
-		class NME_assets_dancing_gauntlet_assets_swf extends nme.utils.ByteArray { }
-	
 
 	
 		class NME_libraries_dancing_gauntlet_assets_swf extends nme.utils.ByteArray { }

@@ -16,7 +16,7 @@
 	<!-- assets -->
 	<icon name="assets/nme.svg" />
 	<assets path="assets" include="*" exclude="nme.svg" />
-	<library path="assets/dancing_gauntlet_assets.swf" />
+	<library path="lib/dancing_gauntlet_assets.swf" />
 	
 	<!-- DLLs -->
 	<ndll name="std" />
@@ -26,4 +26,6 @@
 	
 	<!-- Windows app: hide console -->
 	<!--<setenv name="no_console" value="1" />-->
+	
+	<haxedef name="fdb" if="target_flash" />
 </project>
