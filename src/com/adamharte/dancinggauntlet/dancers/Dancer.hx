@@ -7,12 +7,21 @@ import nme.events.Event;
  * @author Adam Harte (adam@adamharte.com)
  */
 
+enum Direction 
+{
+	up;
+	down;
+	left;
+	right;
+}
+
 class Dancer extends Sprite
 {
 	public var dancerName:String;
 	public var indexX:Int;
 	public var indexY:Int;
 	//public var graphicsClass:Class;
+	public var currentMoveDirection:Direction;
 	
 	private var gfx:Sprite;
 	

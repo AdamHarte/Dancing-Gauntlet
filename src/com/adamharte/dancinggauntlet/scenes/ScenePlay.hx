@@ -3,6 +3,7 @@ import com.adamharte.dancinggauntlet.dancers.Dancer;
 import com.adamharte.dancinggauntlet.events.GUIEvent;
 import com.adamharte.dancinggauntlet.GameState;
 import com.adamharte.dancinggauntlet.gui.ArrowButtons;
+import com.adamharte.dancinggauntlet.gui.PlaySceneGUI;
 import flash.display.Sprite;
 import nme.Assets;
 //import nme.Assets;
@@ -20,9 +21,9 @@ class ScenePlay extends SceneBase
 	
 	private var danceFloorLayer:Sprite;
 	private var dancersLayer:Sprite;
-	private var guiLayer:Sprite;
+	private var guiLayer:PlaySceneGUI;
 	private var arrowButtons:Sprite;
-	private var okButton:ArrowButtons;
+	private var okButton:Sprite;
 	
 
 	public function new() 
@@ -59,19 +60,11 @@ class ScenePlay extends SceneBase
 		dancersLayer.y = danceFloorLayer.y;
 		addChild(dancersLayer);
 		
-		guiLayer = new Sprite();
+		guiLayer = new PlaySceneGUI();
 		addChild(guiLayer);
+		guiLayer.addEventListener(GUIEvent.BUTTON_CLICK, guiLayer_buttonClickHandler);
 		
-		arrowButtons = new ArrowButtons();
-		arrowButtons.x = 600;
-		arrowButtons.y = 20;
-		//guiLayer.addChild(arrowButtons);
-		arrowButtons.addEventListener(GUIEvent.BUTTON_CLICK, arrowButtons_buttonClickHandler);
 		
-		okButton = new ArrowButtons();
-		okButton.x = 600;
-		okButton.y = 300;
-		okButton.addEventListener(GUIEvent.BUTTON_CLICK, okButton_buttonClickHandler);
 		
 		
 		startGame();
@@ -90,29 +83,25 @@ class ScenePlay extends SceneBase
 	override public function draw():Void 
 	{
 		super.draw();
-		if (gameState.currentState == GameState.STATE_INVALID) return;
+		if (gameState.currentState == State.INVALID) return;
 		
 		
 		// Render the gameboard.
-		
+		var dancer:Dancer;
 		for (i in 0...GameState.DANCE_FLOOR_HEIGHT) 
 		{
 			for (j in 0...GameState.DANCE_FLOOR_WIDTH) 
 			{
 				if (gameState.dancers[i] != null && gameState.dancers[i][j] != null) 
 				{
-					var dancer:Dancer = gameState.dancers[i][j];
+					dancer = gameState.dancers[i][j];
 					dancer.x = j * GameState.TILE_SIZE;
 					dancer.y = i * GameState.TILE_SIZE;
 					dancer.width = dancer.height = GameState.TILE_SIZE;
 					dancersLayer.addChild(dancer);
 				}
-				
-				
 			}
 		}
-		
-		
 		
 		
 	}
@@ -130,19 +119,125 @@ class ScenePlay extends SceneBase
 		// Start dance battle sequence.
 		// Winner moves, loser stays still (Maybe loser can't battle ).
 		
-		guiLayer.addChild(arrowButtons);
-		guiLayer.addChild(okButton);
 		
 		
-		
-		gameState.currentState = GameState.STATE_DIRECTION_SELECT;
+		changeState(State.DIRECTION_SELECT);
 	}
 	
 	
 	
+	private function changeState(newState:State):Void 
+	{
+		var previousState:State = gameState.currentState;
+		gameState.currentState = newState;
+		
+		var success:Bool = true;
+		
+		switch (previousState) 
+		{
+			case State.INVALID:
+				switch (newState) 
+				{
+					case State.SETUP:
+						
+					default:
+						success = false;
+				}
+			case State.SETUP:
+				switch (newState) 
+				{
+					case State.SETUP:
+						
+					case State.DIRECTION_SELECT:
+						
+					case State.AI_DIRECTION_SELECT:
+						
+					case State.MOVE_SELECT:
+						
+					case State.BATTLE:
+						
+					case State.MOVE:
+						
+					case State.WIN:
+						
+					default:
+						success = false;
+				}
+			case State.DIRECTION_SELECT:
+				switch (newState) 
+				{
+					case State.SETUP:
+						//TODO: Restart level.
+					case State.AI_DIRECTION_SELECT:
+						
+					default:
+						success = false;
+				}
+			case State.AI_DIRECTION_SELECT:
+				switch (newState) 
+				{
+					case State.SETUP:
+						//TODO: Restart level.
+					case State.MOVE_SELECT:
+						
+					default:
+						success = false;
+				}
+			case State.MOVE_SELECT:
+				switch (newState) 
+				{
+					case State.SETUP:
+						//TODO: Restart level.
+					case State.BATTLE:
+						
+					case State.MOVE:
+						//not sure if this can happen yet
+					default:
+						success = false;
+				}
+			case State.BATTLE:
+				switch (newState) 
+				{
+					case State.SETUP:
+						//TODO: Restart level.
+					case State.MOVE:
+						
+					default:
+						success = false;
+				}
+			case State.MOVE:
+				switch (newState) 
+				{
+					case State.SETUP:
+						//TODO: Restart level.
+					case State.DIRECTION_SELECT:
+						
+					case State.WIN:
+						
+					default:
+						success = false;
+				}
+			case State.WIN:
+				switch (newState) 
+				{
+					case State.SETUP:
+						//TODO: Restart level? or go to next?
+					default:
+						success = false;
+				}
+			default:
+				success = false;
+		}
+		
+		if (!success) 
+		{
+			gameState.currentState = previousState;
+		}
+	}
 	
 	
-	private function arrowButtons_buttonClickHandler(e:GUIEvent):Void 
+	
+	private function guiLayer_buttonClickHandler(e:GUIEvent):Void 
 	{
 		trace(e.guiElement);
 		//TODO: Select what direction the player will try to move in.
@@ -156,6 +251,8 @@ class ScenePlay extends SceneBase
 				
 			case GUIEvent.RIGHT_ARROW_BUTTON:
 				
+			case GUIEvent.OK_BUTTON:
+				okButton_buttonClickHandler(e);
 			default:
 				
 		}
@@ -171,6 +268,21 @@ class ScenePlay extends SceneBase
 		// Advance to next state.
 		//runAIDirectionSelect();
 		
+		switch (gameState.currentState) 
+		{
+			case State.DIRECTION_SELECT:
+				//TODO: If direction selected, move to next state.
+			case State.MOVE_SELECT:
+				//TODO: If dance-move selected, move to next state.
+			case State.BATTLE:
+				//TODO: Skips or speeds up the dance-battle animations, and moves to next state.
+			case State.MOVE:
+				//TODO: Skips or speeds up the moving animations, and moves to next state.
+			case State.WIN:
+				//TODO: Goes to next level.
+			default:
+				
+		}
 		
 	}
 	

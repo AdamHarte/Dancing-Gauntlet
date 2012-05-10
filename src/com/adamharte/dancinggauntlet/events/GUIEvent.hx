@@ -8,12 +8,13 @@ import nme.events.Event;
 
 class GUIEvent extends Event
 {
-	public inline static var BUTTON_CLICK:String = 'button_click';
+	static public inline var BUTTON_CLICK:String = 'button_click';
 	
-	public inline static var UP_ARROW_BUTTON:String = 'up_arrow_button';
-	public inline static var DOWN_ARROW_BUTTON:String = 'down_arrow_button';
-	public inline static var LEFT_ARROW_BUTTON:String = 'left_arrow_button';
-	public inline static var RIGHT_ARROW_BUTTON:String = 'right_arrow_button';
+	static public inline var UP_ARROW_BUTTON:String = 'upArrowButton';
+	static public inline var DOWN_ARROW_BUTTON:String = 'downArrowButton';
+	static public inline var LEFT_ARROW_BUTTON:String = 'leftArrowButton';
+	static public inline var RIGHT_ARROW_BUTTON:String = 'rightArrowButton';
+	static public inline var OK_BUTTON:String = "okButton";
 	
 	public var guiElement:String;
 	

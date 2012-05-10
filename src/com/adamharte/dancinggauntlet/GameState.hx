@@ -8,6 +8,18 @@ import com.adamharte.dancinggauntlet.dancers.RubberMan;
  * @author Adam Harte (adam@adamharte.com)
  */
 
+enum State 
+{
+	INVALID;
+	SETUP;
+	DIRECTION_SELECT;
+	AI_DIRECTION_SELECT;
+	MOVE_SELECT;
+	BATTLE;
+	MOVE;
+	WIN;
+}
+
 class GameState 
 {
 	public inline static var DANCE_FLOOR_WIDTH:Int = 13;
@@ -18,17 +30,18 @@ class GameState
 	public inline static var DANCER_ID_PLAYER:Int 		= 1;
 	public inline static var DANCER_ID_RUBBER_MAN:Int 	= 2;
 	
-	public inline static var STATE_INVALID:Int 		= 0;
-	public inline static var STATE_DIRECTION_SELECT:Int 		= 1;
-	public inline static var STATE_AI_DIRECTION_SELECT:Int 		= 2;
-	public inline static var STATE_MOVE_SELECT:Int 		= 3;
-	public inline static var STATE_AI_MOVE_SELECT:Int 		= 4;
-	public inline static var STATE_BATTLE:Int 		= 5;
-	public inline static var STATE_MOVE:Int 		= 6;
-	public inline static var STATE_WIN:Int 		= 7;
+	//public inline static var STATE_INVALID:Int 		= 0;
+	//public inline static var STATE_DIRECTION_SELECT:Int 		= 1;
+	//public inline static var STATE_AI_DIRECTION_SELECT:Int 		= 2;
+	//public inline static var STATE_MOVE_SELECT:Int 		= 3;
+	//public inline static var STATE_AI_MOVE_SELECT:Int 		= 4;
+	//public inline static var STATE_BATTLE:Int 		= 5;
+	//public inline static var STATE_MOVE:Int 		= 6;
+	//public inline static var STATE_WIN:Int 		= 7;
 	
-	public var currentState:Int;
+	public var currentState:State;
 	public var score:Int;
+	public var player:Player;
 	
 	public var danceFloor:Array<Array<Int>>;
 	public var dancers:Array<Array<Dancer>>;
@@ -46,7 +59,7 @@ class GameState
 	
 	private function reset() 
 	{
-		currentState = STATE_INVALID;
+		currentState = State.INVALID;
 		score = 0;
 		
 		// Create new dance floor.
@@ -73,6 +86,14 @@ class GameState
 			[0,0,0,0,0,0,0,0,0,0,0,0,0],
 			[0,2,0,0,0,0,0,0,0,0,0,0,0]
 		];
+		loadLevel(danceFloor);
+		
+	}
+	
+	
+	
+	public function loadLevel(danceFloor):Void 
+	{
 		dancers = [];
 		for (i in 0...DANCE_FLOOR_HEIGHT) 
 		{
@@ -83,7 +104,8 @@ class GameState
 				switch (danceFloor[i][j]) 
 				{
 					case DANCER_ID_PLAYER:
-						newDancer = new Player();
+						player = new Player();
+						newDancer = player;
 					case DANCER_ID_RUBBER_MAN:
 						newDancer = new RubberMan();
 					default:

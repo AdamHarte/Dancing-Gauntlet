@@ -1,4 +1,6 @@
 # Build and release folders
 bin/cpp/
+bin/flash/haxe/
+bin/html5/haxe/
 
 # Project property files
