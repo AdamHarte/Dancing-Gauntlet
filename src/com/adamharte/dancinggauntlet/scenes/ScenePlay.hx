@@ -20,6 +20,9 @@ class ScenePlay extends SceneBase
 	
 	private var danceFloorLayer:Sprite;
 	private var dancersLayer:Sprite;
+	private var guiLayer:Sprite;
+	private var arrowButtons:Sprite;
+	private var okButton:ArrowButtons;
 	
 
 	public function new() 
@@ -56,11 +59,19 @@ class ScenePlay extends SceneBase
 		dancersLayer.y = danceFloorLayer.y;
 		addChild(dancersLayer);
 		
-		var arrowButtons:Sprite = new ArrowButtons();
+		guiLayer = new Sprite();
+		addChild(guiLayer);
+		
+		arrowButtons = new ArrowButtons();
 		arrowButtons.x = 600;
 		arrowButtons.y = 20;
-		addChild(arrowButtons);
+		//guiLayer.addChild(arrowButtons);
 		arrowButtons.addEventListener(GUIEvent.BUTTON_CLICK, arrowButtons_buttonClickHandler);
+		
+		okButton = new ArrowButtons();
+		okButton.x = 600;
+		okButton.y = 300;
+		okButton.addEventListener(GUIEvent.BUTTON_CLICK, okButton_buttonClickHandler);
 		
 		
 		startGame();
@@ -79,7 +90,7 @@ class ScenePlay extends SceneBase
 	override public function draw():Void 
 	{
 		super.draw();
-		if (gameState.currentState != GameState.STATE_PLAYING) return;
+		if (gameState.currentState == GameState.STATE_INVALID) return;
 		
 		
 		// Render the gameboard.
@@ -108,8 +119,6 @@ class ScenePlay extends SceneBase
 	
 	public function startGame():Void 
 	{
-		gameState.currentState = GameState.STATE_PLAYING;
-		
 		startTurn();
 	}
 	
@@ -121,6 +130,12 @@ class ScenePlay extends SceneBase
 		// Start dance battle sequence.
 		// Winner moves, loser stays still (Maybe loser can't battle ).
 		
+		guiLayer.addChild(arrowButtons);
+		guiLayer.addChild(okButton);
+		
+		
+		
+		gameState.currentState = GameState.STATE_DIRECTION_SELECT;
 	}
 	
 	
@@ -147,6 +162,14 @@ class ScenePlay extends SceneBase
 		
 		//TODO: Show dance moves options
 		///// assets.gui.ADanceMovesButtons
+		
+		
+	}
+	
+	private function okButton_buttonClickHandler(e:GUIEvent):Void 
+	{
+		// Advance to next state.
+		//runAIDirectionSelect();
 		
 		
 	}

@@ -1,0 +1,16 @@
+TODO:
+
+* Finite state machine for game states.
+* Gameplay stages.
+	* Begin turn.
+	* Select move direction.
+	* AI also selects move direction.
+	* Battle any dancers that are now in range.
+		* Select dance move.
+		* AI also selects a move.
+		* Winner moves, loser stays in place.
+	* If no battle, then move.
+	* Turn ends.
+	* If you have reached a block that has a chair next to it, you win!
+	
+

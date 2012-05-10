@@ -19,7 +19,13 @@ class GameState
 	public inline static var DANCER_ID_RUBBER_MAN:Int 	= 2;
 	
 	public inline static var STATE_INVALID:Int 		= 0;
-	public inline static var STATE_PLAYING:Int 		= 1;
+	public inline static var STATE_DIRECTION_SELECT:Int 		= 1;
+	public inline static var STATE_AI_DIRECTION_SELECT:Int 		= 2;
+	public inline static var STATE_MOVE_SELECT:Int 		= 3;
+	public inline static var STATE_AI_MOVE_SELECT:Int 		= 4;
+	public inline static var STATE_BATTLE:Int 		= 5;
+	public inline static var STATE_MOVE:Int 		= 6;
+	public inline static var STATE_WIN:Int 		= 7;
 	
 	public var currentState:Int;
 	public var score:Int;
