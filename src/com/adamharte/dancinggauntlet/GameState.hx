@@ -92,7 +92,7 @@ class GameState
 	
 	
 	
-	public function loadLevel(danceFloor):Void 
+	public function loadLevel(danceFloor:Array<Array<Int>>):Void 
 	{
 		dancers = [];
 		for (i in 0...DANCE_FLOOR_HEIGHT) 
